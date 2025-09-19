@@ -1,0 +1,142 @@
+{
+  // Настройки для разработки на Go
+  "go.toolsManagement.autoUpdate": true,
+  "go.useLanguageServer": true,
+  "go.addTags": {
+    "tags": "json",
+    "options": "json=omitempty",
+    "promptForTags": false,
+    "transform": "snakecase"
+  },
+  "go.goroot": "/usr/local/go",
+  "go.formatTool": "goimports",
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--fast",
+    "--timeout",
+    "5m",
+    "--fix"
+  ],
+  // Секция тестирования
+  // "-s" и "-benchtime=5s" предназначены для специфичных сценариев (вывода служебной информации и бенчмаркинга),
+  "go.testFlags": [
+    "-cover",
+    "-race",
+    "-count=1",
+    "-v",
+    // "-s",
+    // "-benchtime=5s",
+    "-timeout=5m"
+  ],
+  "go.testExplorer.enabled": true,
+  "go.enableCodeLens": {
+    "runtest": true
+  },
+  // Настройки отладки
+  "go.delveConfig": {
+    "apiVersion": 2,
+    "showGlobalVariables": true,
+    "debugAdapter": "dlv-dap"
+  },
+  // Расширенные настройки отладки
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.showInStatusBar": "always",
+  "debug.console.fontSize": 14,
+  "debug.console.fontFamily": "JetBrainsMono Nerd Font",
+  "debug.internalConsoleOptions": "openOnSessionStart",
+  "debug.openDebug": "openOnDebugBreak",
+  "debug.focusWindowOnBreak": true,
+  "debug.showSubSessionsInToolBar": true,
+  // Конфигурация gopls
+  "gopls": {
+    "formatting.gofumpt": true,
+    "usePlaceholders": true,
+    "ui.semanticTokens": true,
+    "completionBudget": "100ms",
+    "staticcheck": true,
+    "analyses": {
+      "unusedparams": true,
+      "unusedwrite": true
+    }
+  },
+  // Настройки редактора для файлов Go
+  "[go]": {
+    "editor.insertSpaces": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.stickyScroll.enabled": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always",
+      "source.fixAll": "always"
+    }
+  },
+  // Расширенные inlay hints для Go
+  "go.inlayHints.compositeLiteralFields": true,
+  "go.inlayHints.compositeLiteralTypes": true,
+  "go.inlayHints.functionTypeParameters": true,
+  "go.inlayHints.parameterNames": true,
+  "go.inlayHints.rangeVariableTypes": true,
+  "go.inlayHints.constantValues": true,
+  // Проверка на уязвимости в импортируемых пакетах
+  "go.diagnostic.vulncheck": "Imports",
+  // Переменные окружения для инструментов Go
+  "go.toolsEnvVars": {
+    "GOFLAGS": "-buildvcs=false"
+  },
+  // Глобальные настройки редактора и Git
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "always",
+    "source.fixAll": "always"
+  },
+  "editor.semanticHighlighting.enabled": false,
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on",
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/vendor": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/vendor": true
+  },
+  // Прочие настройки
+  "git.ignoreRebaseWarning": true,
+  "workbench.colorTheme": "GitHub Dark",
+  "git.replaceTagsWhenPull": true,
+  "makefile.configureOnOpen": true,
+  // "code-runner.runInTerminal": true,
+  "code-runner.executorMap": {
+    "go": "cd $workspaceRoot && go run ."
+  },
+  // settings.json
+  "http.proxy": "",
+  "http.proxySupport": "off",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "test_connection",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "postgres_secret"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "simple bank",
+      "database": "simple_bank",
+      "username": "postgres",
+      "password": "postgres"
+    }
+  ]
+}

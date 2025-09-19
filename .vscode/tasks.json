@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // 1️⃣  Сборка Linux‑бинаря в корне
+    {
+      "label": "build-linux",
+      "type": "shell",
+      "command": "go",
+      "args": ["build", "-v", "-o", "${workspaceFolderBasename}", "."],
+      "options": { "env": { "GOOS": "linux", "GOARCH": "amd64" } },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$go"]
+    },
+
+    // 2️⃣  Быстрый запуск текущей ОС (без кросс‑сборки)
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "go",
+      "args": ["run", "."],
+      "group": "build",
+      "problemMatcher": ["$go"]
+    },
+
+    // 3️⃣  Тесты + обычный отчёт в консоль
+    {
+      "label": "test",
+      "type": "shell",
+      "command": "go",
+      "args": ["test", "-v", "-cover", "./..."],
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": ["$go"]
+    },
+
+    // 4️⃣  Генерация профиля покрытия
+    {
+      "label": "test-cover-profile",
+      "type": "shell",
+      "command": "go",
+      "args": ["test", "-v", "-coverprofile=coverage.out", "./..."],
+      "problemMatcher": ["$go"],
+      "group": "test"
+    },
+
+    // 5️⃣  HTML‑отчёт из профиля
+    {
+      "label": "test-cover-html",
+      "type": "shell",
+      "command": "go",
+      "args": ["tool", "cover", "-html=coverage.out", "-o", "coverage.html"],
+      "dependsOn": ["test-cover-profile"],
+      "group": "test",
+      "presentation": { "reveal": "always" }
+    },
+
+    // 6️⃣  Управление зависимостями
+    {
+      "label": "mod tidy",
+      "type": "shell",
+      "command": "go",
+      "args": ["mod", "tidy"],
+      "problemMatcher": []
+    },
+    {
+      "label": "go: build",
+      "type": "shell",
+      "command": "go build -v ./...",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
