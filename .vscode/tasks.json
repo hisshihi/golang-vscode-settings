@@ -1,74 +1,322 @@
 {
   "version": "2.0.0",
   "tasks": [
-    // 1️⃣  Сборка Linux‑бинаря в корне
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "build",
+        "-v",
+        "-o",
+        "${workspaceFolderBasename}",
+        "."
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$go"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
     {
       "label": "build-linux",
       "type": "shell",
       "command": "go",
-      "args": ["build", "-v", "-o", "${workspaceFolderBasename}", "."],
-      "options": { "env": { "GOOS": "linux", "GOARCH": "amd64" } },
-      "group": { "kind": "build", "isDefault": true },
-      "problemMatcher": ["$go"]
+      "args": [
+        "build",
+        "-v",
+        "-o",
+        "${workspaceFolderBasename}-linux",
+        "."
+      ],
+      "options": {
+        "env": {
+          "GOOS": "linux",
+          "GOARCH": "amd64"
+        }
+      },
+      "group": "build",
+      "problemMatcher": [
+        "$go"
+      ]
     },
-
-    // 2️⃣  Быстрый запуск текущей ОС (без кросс‑сборки)
+    {
+      "label": "build-windows",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "build",
+        "-v",
+        "-o",
+        "${workspaceFolderBasename}.exe",
+        "."
+      ],
+      "options": {
+        "env": {
+          "GOOS": "windows",
+          "GOARCH": "amd64"
+        }
+      },
+      "group": "build",
+      "problemMatcher": [
+        "$go"
+      ]
+    },
+    {
+      "label": "build-all-platforms",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "build",
+        "build-linux",
+        "build-windows"
+      ]
+    },
     {
       "label": "run",
       "type": "shell",
       "command": "go",
-      "args": ["run", "."],
+      "args": [
+        "run",
+        "."
+      ],
       "group": "build",
-      "problemMatcher": ["$go"]
+      "problemMatcher": [
+        "$go"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      }
     },
-
-    // 3️⃣  Тесты + обычный отчёт в консоль
+    {
+      "label": "run-with-race",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "run",
+        "-race",
+        "."
+      ],
+      "group": "build",
+      "problemMatcher": [
+        "$go"
+      ]
+    },
     {
       "label": "test",
       "type": "shell",
       "command": "go",
-      "args": ["test", "-v", "-cover", "./..."],
-      "group": { "kind": "test", "isDefault": true },
-      "problemMatcher": ["$go"]
+      "args": [
+        "test",
+        "-v",
+        "-cover",
+        "./..."
+      ],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$go"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      }
     },
-
-    // 4️⃣  Генерация профиля покрытия
+    {
+      "label": "test-race",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "test",
+        "-v",
+        "-race",
+        "./..."
+      ],
+      "group": "test",
+      "problemMatcher": [
+        "$go"
+      ]
+    },
+    {
+      "label": "test-short",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "test",
+        "-v",
+        "-short",
+        "./..."
+      ],
+      "group": "test",
+      "problemMatcher": [
+        "$go"
+      ]
+    },
     {
       "label": "test-cover-profile",
       "type": "shell",
       "command": "go",
-      "args": ["test", "-v", "-coverprofile=coverage.out", "./..."],
-      "problemMatcher": ["$go"],
+      "args": [
+        "test",
+        "-v",
+        "-coverprofile=coverage.out",
+        "./..."
+      ],
+      "problemMatcher": [
+        "$go"
+      ],
       "group": "test"
     },
-
-    // 5️⃣  HTML‑отчёт из профиля
     {
       "label": "test-cover-html",
       "type": "shell",
       "command": "go",
-      "args": ["tool", "cover", "-html=coverage.out", "-o", "coverage.html"],
-      "dependsOn": ["test-cover-profile"],
+      "args": [
+        "tool",
+        "cover",
+        "-html=coverage.out",
+        "-o",
+        "coverage.html"
+      ],
+      "dependsOn": [
+        "test-cover-profile"
+      ],
       "group": "test",
-      "presentation": { "reveal": "always" }
+      "presentation": {
+        "reveal": "always"
+      }
     },
-
-    // 6️⃣  Управление зависимостями
     {
-      "label": "mod tidy",
+      "label": "benchmark",
       "type": "shell",
       "command": "go",
-      "args": ["mod", "tidy"],
+      "args": [
+        "test",
+        "-v",
+        "-bench=.",
+        "-benchmem",
+        "./..."
+      ],
+      "group": "test",
+      "problemMatcher": [
+        "$go"
+      ]
+    },
+    {
+      "label": "mod-tidy",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "mod",
+        "tidy"
+      ],
       "problemMatcher": []
     },
     {
-      "label": "go: build",
+      "label": "mod-download",
       "type": "shell",
-      "command": "go build -v ./...",
-      "group": {
-        "kind": "build",
-        "isDefault": true
+      "command": "go",
+      "args": [
+        "mod",
+        "download"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "fmt",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "fmt",
+        "./..."
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "vet",
+      "type": "shell",
+      "command": "go",
+      "args": [
+        "vet",
+        "./..."
+      ],
+      "problemMatcher": [
+        "$go"
+      ]
+    },
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "golangci-lint",
+      "args": [
+        "run",
+        "./..."
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
       }
+    },
+    {
+      "label": "clean",
+      "type": "shell",
+      "command": "rm",
+      "args": [
+        "-f",
+        "${workspaceFolderBasename}",
+        "${workspaceFolderBasename}-linux",
+        "${workspaceFolderBasename}.exe",
+        "coverage.out",
+        "coverage.html"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "pre-commit",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "fmt",
+        "mod-tidy",
+        "vet",
+        "test"
+      ],
+      "problemMatcher": [
+        "$go"
+      ]
+    },
+    {
+      "label": "full-check",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "fmt",
+        "mod-tidy",
+        "vet",
+        "test-race",
+        "build"
+      ]
     }
   ]
 }
