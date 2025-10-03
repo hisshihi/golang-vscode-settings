@@ -35,19 +35,14 @@
   // Настройки отладки
   "go.delveConfig": {
     "apiVersion": 2,
-    "showGlobalVariables": true,
+    "showGlobalVariables": false,
     "debugAdapter": "dlv-dap",
-    "showLog": true, // Новое: логи Delve в Output
-    "logOutput": "debugger,dap,rpc", // Новое: детальные логи
-    "dlvLoadConfig": { // Новое: лимиты загрузки данных
-      "followPointers": true,
-      "maxVariableRecurse": 1,
-      "maxStringLen": 512, // Увеличено для длинных строк
-      "maxArrayValues": 64,
-      "maxStructFields": -1
-    },
-    "substitutePathClientToServer": {}, // Для Docker/Remote debugging
-    "substitutePathServerToClient": {}
+    "showLog": false, // Отключаем детальные логи для избежания ошибок регистров
+    "logOutput": "debugger",
+    "showRegisters": false,
+    "dlvFlags": [
+      "--check-go-version=false"
+    ]
   },
   // Расширенные настройки отладки
   "debug.allowBreakpointsEverywhere": true,
@@ -59,7 +54,7 @@
   "debug.focusWindowOnBreak": true,
   "debug.showSubSessionsInToolBar": true,
   // После секции debug.showSubSessionsInToolBar
-  "debug.inlineValues": true, // Inline-значения как в GoLand
+  "debug.inlineValues": "on", // Inline-значения как в GoLand
   "debug.saveBeforeStart": "allEditorsInActiveGroup",
   "debug.terminal.clearBeforeReusing": true,
   // Улучшенные inlay hints (у вас уже есть, но можно дополнить)
