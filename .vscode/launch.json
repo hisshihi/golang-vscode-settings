@@ -8,16 +8,34 @@
       "mode": "auto",
       "program": "${workspaceFolder}",
       "console": "integratedTerminal",
+      // Визуализация переменных и горутин
+      "showGlobalVariables": true,
+      "showRegisters": false,
+      "hideSystemGoroutines": false,
+      // Глубина трассировки стека
+      "stackTraceDepth": 100,
+      // Детальное логирование
       "showLog": true,
       "trace": "verbose",
-      "logOutput": "rpc",
+      "logOutput": "dap,debugger",
+      // Параметры запуска
       "args": [],
       "env": {},
       "cwd": "${workspaceFolder}",
       "stopOnEntry": false,
+      // Флаги Delve
       "dlvFlags": [
-        "--check-go-version=false"
-      ]
+        "--check-go-version=false",
+        "--api-version=2"
+      ],
+      // Настройки загрузки данных
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
     },
     {
       "name": "Debug Current File",
@@ -26,12 +44,25 @@
       "mode": "auto",
       "program": "${file}",
       "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
       "cwd": "${fileDirname}",
       "stopOnEntry": false,
       "dlvFlags": [
-        "--check-go-version=false"
-      ]
+        "--check-go-version=false",
+        "--api-version=2"
+      ],
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
     },
     {
       "name": "Debug with Arguments",
@@ -40,6 +71,12 @@
       "mode": "auto",
       "program": "${workspaceFolder}",
       "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
+      "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
       "args": [
         "--port=9091",
         "--debug"
@@ -51,8 +88,48 @@
       "cwd": "${workspaceFolder}",
       "stopOnEntry": false,
       "dlvFlags": [
-        "--check-go-version=false"
-      ]
+        "--check-go-version=false",
+        "--api-version=2"
+      ],
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
+    },
+    {
+      "name": "Debug with Goroutine Inspection",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      // Максимальная видимость горутин
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 200,
+      "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
+      "args": [],
+      "env": {
+        "GOMAXPROCS": "1"
+      },
+      "cwd": "${workspaceFolder}",
+      "stopOnEntry": false,
+      "dlvFlags": [
+        "--check-go-version=false",
+        "--api-version=2"
+      ],
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 3,
+        "maxStringLen": 2048,
+        "maxArrayValues": 256,
+        "maxStructFields": -1
+      }
     },
     {
       "name": "Attach to Process",
@@ -60,8 +137,12 @@
       "request": "attach",
       "mode": "local",
       "processId": "${command:pickProcess}",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
-      "trace": "verbose"
+      "trace": "verbose",
+      "logOutput": "dap,debugger"
     },
     {
       "name": "Connect to Remote Delve",
@@ -71,8 +152,18 @@
       "remotePath": "${workspaceFolder}",
       "port": 2345,
       "host": "127.0.0.1",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
-      "trace": "verbose"
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
+      "substitutePath": [
+        {
+          "from": "${workspaceFolder}",
+          "to": "/app"
+        }
+      ]
     },
     {
       "name": "Debug Tests in Current File",
@@ -81,14 +172,54 @@
       "mode": "test",
       "program": "${file}",
       "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
       "args": [
         "-test.v",
         "-test.run",
         ".*"
       ],
       "env": {},
-      "cwd": "${fileDirname}"
+      "cwd": "${fileDirname}",
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
+    },
+    {
+      "name": "Debug Specific Test",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "program": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
+      "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
+      "args": [
+        "-test.v",
+        "-test.run",
+        "^${input:testName}$"
+      ],
+      "env": {},
+      "cwd": "${workspaceFolder}",
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
     },
     {
       "name": "Debug All Tests in Package",
@@ -97,13 +228,25 @@
       "mode": "test",
       "program": "${fileDirname}",
       "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
       "args": [
         "-test.v",
         "-test.cover"
       ],
       "env": {},
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}",
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
     },
     {
       "name": "Debug All Tests in Workspace",
@@ -112,14 +255,34 @@
       "mode": "test",
       "program": "${workspaceFolder}",
       "console": "integratedTerminal",
+      "showGlobalVariables": true,
+      "hideSystemGoroutines": false,
+      "stackTraceDepth": 100,
       "showLog": true,
+      "trace": "verbose",
+      "logOutput": "dap,debugger",
       "args": [
         "-test.v",
         "-test.cover",
         "./..."
       ],
       "env": {},
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}",
+      "dlvLoadConfig": {
+        "followPointers": true,
+        "maxVariableRecurse": 2,
+        "maxStringLen": 1024,
+        "maxArrayValues": 128,
+        "maxStructFields": -1
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testName",
+      "type": "promptString",
+      "description": "Test function name (regex pattern)",
+      "default": "TestMain"
     }
   ]
 }

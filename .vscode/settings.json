@@ -36,7 +36,18 @@
   "go.delveConfig": {
     "apiVersion": 2,
     "showGlobalVariables": true,
-    "debugAdapter": "dlv-dap"
+    "debugAdapter": "dlv-dap",
+    "showLog": true, // Новое: логи Delve в Output
+    "logOutput": "debugger,dap,rpc", // Новое: детальные логи
+    "dlvLoadConfig": { // Новое: лимиты загрузки данных
+      "followPointers": true,
+      "maxVariableRecurse": 1,
+      "maxStringLen": 512, // Увеличено для длинных строк
+      "maxArrayValues": 64,
+      "maxStructFields": -1
+    },
+    "substitutePathClientToServer": {}, // Для Docker/Remote debugging
+    "substitutePathServerToClient": {}
   },
   // Расширенные настройки отладки
   "debug.allowBreakpointsEverywhere": true,
@@ -47,6 +58,13 @@
   "debug.openDebug": "openOnDebugBreak",
   "debug.focusWindowOnBreak": true,
   "debug.showSubSessionsInToolBar": true,
+  // После секции debug.showSubSessionsInToolBar
+  "debug.inlineValues": true, // Inline-значения как в GoLand
+  "debug.saveBeforeStart": "allEditorsInActiveGroup",
+  "debug.terminal.clearBeforeReusing": true,
+  // Улучшенные inlay hints (у вас уже есть, но можно дополнить)
+  "editor.inlayHints.enabled": "on",
+  "go.inlayHints.assignVariableTypes": true, // Новое
   // Конфигурация gopls
   "gopls": {
     "formatting.gofumpt": true,
@@ -107,36 +125,21 @@
   },
   // Прочие настройки
   "git.ignoreRebaseWarning": true,
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "One Dark Pro",
   "git.replaceTagsWhenPull": true,
   "makefile.configureOnOpen": true,
   // "code-runner.runInTerminal": true,
   "code-runner.executorMap": {
     "go": "cd $workspaceRoot && go run ."
   },
-  // settings.json
-  "http.proxy": "",
-  "http.proxySupport": "off",
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5432,
-      "driver": "PostgreSQL",
-      "name": "test_connection",
-      "database": "postgres",
-      "username": "postgres",
-      "password": "postgres_secret"
-    },
-    {
-      "previewLimit": 50,
-      "server": "localhost",
-      "port": 5432,
-      "driver": "PostgreSQL",
-      "name": "simple bank",
-      "database": "simple_bank",
-      "username": "postgres",
-      "password": "postgres"
-    }
-  ]
+  // В конец settings.json
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  // Указываем какая конфигурация запускается по умолчанию
+  "debug.onTaskErrors": "showErrors",
+  "go.languageServerFlags": [
+    "-debug=:6060"
+  ],
 }
