@@ -106,6 +106,15 @@
       }
     },
     {
+      "name": "Debug with Race Detector",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "buildFlags": "-race", // <--- Ключевой момент
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Attach to Process",
       "type": "go",
       "request": "attach",

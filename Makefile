@@ -64,13 +64,6 @@ lint: ## golangci-lint
 vuln: ## govulncheck
 	govulncheck ./...
 
-.PHONY: proto
-proto: ## generate protobuf files
-	rm -f pb/*.go
-	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
-  --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
-  proto/*.proto
-
 ifeq ($(CGO_ENABLED),0)
 RACE_OPT =
 else
