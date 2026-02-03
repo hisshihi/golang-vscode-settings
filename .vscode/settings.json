@@ -1,7 +1,7 @@
 {
   // --- UI & Appearance ---
   "workbench.colorTheme": "GitHub Dark", // Или Ayu Light, если любишь светлую
-  "workbench.iconTheme": "symbols",
+  "workbench.iconTheme": "catppuccin-frappe",
   "editor.fontFamily": "JetBrainsMono Nerd Font", // Топ выбор!
   "editor.fontSize": 14,
   "editor.fontLigatures": true,
