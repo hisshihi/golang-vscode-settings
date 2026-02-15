@@ -6,7 +6,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}",
+      "program": "${workspaceFolder}/cmd/app",
       "console": "integratedTerminal",
       // Визуализация переменных и горутин
       "showGlobalVariables": false,
@@ -52,7 +52,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}",
+      "program": "${workspaceFolder}/cmd/app",
       "console": "integratedTerminal",
       "showGlobalVariables": false,
       "hideSystemGoroutines": true,
@@ -79,7 +79,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}",
+      "program": "${workspaceFolder}/cmd/app",
       "console": "integratedTerminal",
       // Упрощенная видимость горутин
       "showGlobalVariables": false,
@@ -110,7 +110,7 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}",
+      "program": "${workspaceFolder}/cmd/app",
       "buildFlags": "-race", // <--- Ключевой момент
       "console": "integratedTerminal"
     },
