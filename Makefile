@@ -1,5 +1,4 @@
 BIN := ./bin/app
-MAIN := ./cmd/app/main.go
 
 .PHONY: all
 all: gen fmt lint test build
@@ -10,11 +9,11 @@ help:
 
 .PHONY: run
 run: ## Run the application
-	go run $(MAIN)
+	go run .
 
 .PHONY: build
 build: ## Build the binary
-	go build -o $(BIN) $(MAIN)
+	go build -o $(BIN) .
 
 .PHONY: test
 test: ## Run tests with race detector

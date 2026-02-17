@@ -1,10 +1,10 @@
 version: 2
 
-project_name: golang-lessons
+project_name: golang-vscode
 
 builds:
   - id: app
-    main: ./cmd/app # <--- Указали правильный путь
+    main: main.go
     binary: url_shortner
     env:
       - CGO_ENABLED=0

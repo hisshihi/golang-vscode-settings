@@ -10,7 +10,7 @@
         "-v",
         "-o",
         "${workspaceFolderBasename}",
-        "./cmd/app"
+        "."
       ],
       "group": {
         "kind": "build",
@@ -37,7 +37,7 @@
         "-v",
         "-o",
         "${workspaceFolderBasename}-linux",
-        "./cmd/app"
+        "."
       ],
       "options": {
         "env": {
@@ -59,7 +59,7 @@
         "-v",
         "-o",
         "${workspaceFolderBasename}.exe",
-        "./cmd/app"
+        "."
       ],
       "options": {
         "env": {
@@ -87,7 +87,7 @@
       "command": "go",
       "args": [
         "run",
-        "./cmd/app"
+        "."
       ],
       "group": "build",
       "problemMatcher": [
@@ -109,7 +109,7 @@
       "args": [
         "run",
         "-race",
-        "./cmd/app"
+        "."
       ],
       "group": "build",
       "problemMatcher": [

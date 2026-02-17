@@ -52,9 +52,9 @@
       "nilness": true, // Анализ nil-pointer panic
       "shadow": true // Подсветка теневых переменных
     },
-    "codelenses": {
-      "gc_details": false // Включи true, если хочешь видеть решение escape-analysis (оптимизация)
-    }
+    // "codelenses": {
+    //   "gc_details": false // Включи true, если хочешь видеть решение escape-analysis (оптимизация)
+    // }
   },
   // --- Editor behavior for Go ---
   "[go]": {
